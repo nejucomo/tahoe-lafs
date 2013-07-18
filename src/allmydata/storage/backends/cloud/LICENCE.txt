@@ -1,0 +1,35 @@
+﻿
+
+NOTICE: you do not (yet) have full rights to use all of this source code under
+Free and Open Source terms.
+
+The copyright holder, https://LeastAuthority.com, hereby grants you a licence
+to use the contents of this directory, *excluding* the subdirectories
+"googlestorage", "msazure", "openstack", and "s3", under the same terms as
+Tahoe-LAFS itself (see the README.rst file in the root directory of the
+Tahoe-LAFS source distribution for those terms).
+
+The copyright holder, https://LeastAuthority.com, hereby grants you a licence
+to use the contents of the subdirectories "googlestorage", "msazure",
+"openstack", and "s3" for NON-COMMERCIAL USE ONLY.
+
+Note: while https://LeastAuthority.com does have the right to withhold full
+Free and Open Source rights to this software from you temporarily,
+https://LeastAuthority.com does not have the right to withhold such rights from
+you for longer than 12 months after we first distributed or hosted this
+software. That is because the software that this is a derived work of —
+Tahoe-LAFS — is distributed under the terms of the Transitive Grace Period
+Public Licence, which allows us to distribute our derived work of Tahoe-LAFS
+without open-sourcing our derived work, but only for up to 12 months.
+therefore, you will have the legal right to use this software under the full
+Free and Open Source terms of the Transitive Grace Period Public Licence 12
+months after this software was first distributed or hosted.
+
+If you would like to use this software for commercial use, and it has not yet
+been 12 months since this software was first distributed or hosted, then please
+contact info@LeastAuthority.com and we will happily sell you a commercial
+licence and a support contract.
+
+See also this branch:
+https://github.com/LeastAuthority/tahoe-lafs/tree/1819-cloud-merge-opensource
+which contains no software which isn't already Free and Open Source.
