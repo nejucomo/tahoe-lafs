@@ -1,4 +1,9 @@
-﻿This work also comes with the added permission that you may combine it with a
+﻿
+
+NOTE: only part of this work, and not this entire work, is covered
+under this licence. See README.txt for details.
+
+This work also comes with the added permission that you may combine it with a
 work licensed under the OpenSSL license (any version) and distribute the
 resulting combined work, as long as you follow the requirements of the
 licences of this work in regard to all of the resulting combined work
