@@ -148,6 +148,37 @@ if "sdist_dsc" in sys.argv:
 tests_require=[]
 
 
+def generate_data_files():
+    """Generate the data_files argument for setup().
+
+    Bundle licenses, docs, and other important files such that they
+    are installed in a well-known location outside of a source checkout
+    or tarball.  For example, these files will be available to those
+    who use `pip install allmydata-tahoe`
+    """
+
+    sharedocdest = 'share/doc/' + APPNAME
+    data_files = [
+        (sharedocdest,
+         ['COPYING.GPL',
+          'COPYING.TGPPL.rst',
+          'CREDITS',
+          'NEWS.rst',
+          'README.txt',
+          'relnotes.txt',
+          ])]
+
+    for subdir, _, fs in os.walk('docs'):
+        assert subdir.startswith('docs')
+        paths = []
+        for f in fs:
+            paths.append(os.path.join(subdir, f))
+        data_files.append( (os.path.join(sharedocdest, subdir), paths) )
+
+    return data_files
+
+
+
 class Trial(Command):
     description = "run trial (use 'bin%stahoe debug trial' for the full set of trial options)" % (os.sep,)
     # This is just a subset of the most useful options, for compatibility.
@@ -456,6 +487,7 @@ setup(name=APPNAME,
                     "allmydata.web.static.css": ["*.css"],
                     "allmydata.web.static.img": ["*.png"],
                     },
+      data_files = generate_data_files(),
       setup_requires=setup_requires,
       entry_points = { 'console_scripts': [ 'tahoe = allmydata.scripts.runner:run' ] },
       zip_safe=False, # We prefer unzipped for easier access.
