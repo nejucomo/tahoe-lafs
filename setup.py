@@ -456,6 +456,24 @@ setup(name=APPNAME,
                     "allmydata.web.static.css": ["*.css"],
                     "allmydata.web.static.img": ["*.png"],
                     },
+
+      # bundle licenses, docs, and other important files such that they
+      # are installed in a well-known location outside of a source checkout
+      # or tarball.  For example, these files will be available to those
+      # who use `pip install allmydata-tahoe`
+      data_files = [
+        ('share/doc/' + APPNAME,
+         ['COPYING.GPL',
+          'COPYING.TGPPL.rst',
+          'COPYING.MIT.txt',
+          'COPYING.SPL.txt',
+          'NEWS.rst',
+          'README.rst',
+          'README.ed25519.rst',
+          'docs',
+          ])
+        ],
+
       setup_requires=setup_requires,
       entry_points = { 'console_scripts': [ 'tahoe = allmydata.scripts.runner:run' ] },
       zip_safe=False, # We prefer unzipped for easier access.
