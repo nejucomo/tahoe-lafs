@@ -464,7 +464,6 @@ setup(name=APPNAME,
       data_files = [
         ('share/doc/' + APPNAME,
          ['COPYING.GPL',
-          'COPYING.SPL.txt',
           'COPYING.TGPPL.rst',
           'CREDITS',
           'docs',
