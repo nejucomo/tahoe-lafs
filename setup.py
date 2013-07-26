@@ -162,18 +162,16 @@ def generate_data_files():
         'COPYING.TGPPL.rst',
         'CREDITS',
         'NEWS.rst',
-        'README.ed25519.rst',
-        'README.rst',
+        'README.txt',
         'relnotes.txt',
         ]
 
     for basedir, _, fs in os.walk('docs'):
         assert basedir.startswith('docs')
         for f in fs:
-            path = os.path.join(basedir, f)
-            relpath = os.path.join(*path.split(os.pathsep)[1:])
-            sharedocfiles.append(relpath)
+            sharedocfiles.append(os.path.join(basedir, f))
 
+    import nejtrace; nejtrace.expr('sharedocfiles') # NO_COMMIT
     return [('share/doc/' + APPNAME, sharedocfiles)]
 
 
