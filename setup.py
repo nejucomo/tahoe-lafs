@@ -157,22 +157,25 @@ def generate_data_files():
     who use `pip install allmydata-tahoe`
     """
 
-    sharedocfiles = [
-        'COPYING.GPL',
-        'COPYING.TGPPL.rst',
-        'CREDITS',
-        'NEWS.rst',
-        'README.txt',
-        'relnotes.txt',
-        ]
+    sharedocdest = 'share/doc/' + APPNAME
+    data_files = [
+        (sharedocdest,
+         ['COPYING.GPL',
+          'COPYING.TGPPL.rst',
+          'CREDITS',
+          'NEWS.rst',
+          'README.txt',
+          'relnotes.txt',
+          ])]
 
-    for basedir, _, fs in os.walk('docs'):
-        assert basedir.startswith('docs')
+    for subdir, _, fs in os.walk('docs'):
+        assert subdir.startswith('docs')
+        paths = []
         for f in fs:
-            sharedocfiles.append(os.path.join(basedir, f))
+            paths.append(os.path.join(subdir, f))
+        data_files.append( (os.path.join(sharedocdest, subdir), paths) )
 
-    import nejtrace; nejtrace.expr('sharedocfiles') # NO_COMMIT
-    return [('share/doc/' + APPNAME, sharedocfiles)]
+    return data_files
 
 
 
