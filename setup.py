@@ -420,6 +420,23 @@ if version:
     setup_args["version"] = version
 
 
+def run_command_petmail_style(args, cwd=None, verbose=False):
+    print "running '%s'" % " ".join(args)
+    try:
+        # remember shell=False, so use e.g. git.cmd on windows, not just git
+        p = subprocess.Popen(args, cwd=cwd)
+    except EnvironmentError, e:
+        if verbose:
+            print "unable to run %s" % args[0]
+            print e
+        return False
+    p.communicate()
+    if p.returncode != 0:
+        if verbose:
+            print "unable to run %s (error)" % args[0]
+        return False
+    return True
+
 class SafeDevelop(Command):
     description = "safely install everything into a local virtualenv"
     user_options = []
@@ -435,18 +452,18 @@ class SafeDevelop(Command):
         # or add 'support' to sys.path, import virtualenv, munge sys.argv,
         # virtualenv.main(), replace sys.argv
         cmd = [sys.executable, "support/virtualenv.py", "venv"]
-        if not run_command(cmd):
+        if not run_command_petmail_style(cmd):
             print "error while creating virtualenv in ./venv"
             sys.exit(1)
         print "venv created"
         # or import support/peep.py, run peep.commands["install"](args)
         cmd = ["venv/bin/python", "support/peep.py",
                "install", "-r", "requirements.txt"]
-        if not run_command(cmd):
+        if not run_command_petmail_style(cmd):
             print "error while installing dependencies"
             sys.exit(1)
         cmd = ["venv/bin/python", "setup.py", "develop"]
-        if not run_command(cmd):
+        if not run_command_petmail_style(cmd):
             print "error while installing dependencies"
             sys.exit(1)
         print "dependencies and petmail installed into venv"
