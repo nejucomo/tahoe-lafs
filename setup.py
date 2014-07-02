@@ -10,7 +10,7 @@ import sys; assert sys.version_info < (3,), ur"Tahoe-LAFS does not run under Pyt
 #
 # See the docs/about.rst file for licensing information.
 
-import glob, os, stat, subprocess, re
+import glob, os, stat, subprocess, re, shutil
 
 ##### sys.path management
 
@@ -22,7 +22,7 @@ def pylibdir(prefixdir):
         return os.path.join(prefixdir, "lib", pyver, "site-packages")
 
 basedir = os.path.dirname(os.path.abspath(__file__))
-supportlib = pylibdir(os.path.join(basedir, "support"))
+supportlib = pylibdir(os.path.join(basedir, "legacysupport"))
 
 # locate our version number
 
@@ -419,6 +419,40 @@ setup_args = {}
 if version:
     setup_args["version"] = version
 
+
+class SafeDevelop(Command):
+    description = "safely install everything into a local virtualenv"
+    user_options = []
+
+    def initialize_options(self):
+        pass
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        if os.path.exists("venv"):
+            shutil.rmtree("venv") # clobber it
+        # or add 'support' to sys.path, import virtualenv, munge sys.argv,
+        # virtualenv.main(), replace sys.argv
+        cmd = [sys.executable, "support/virtualenv.py", "venv"]
+        if not run_command(cmd):
+            print "error while creating virtualenv in ./venv"
+            sys.exit(1)
+        print "venv created"
+        # or import support/peep.py, run peep.commands["install"](args)
+        cmd = ["venv/bin/python", "support/peep.py",
+               "install", "-r", "requirements.txt"]
+        if not run_command(cmd):
+            print "error while installing dependencies"
+            sys.exit(1)
+        cmd = ["venv/bin/python", "setup.py", "develop"]
+        if not run_command(cmd):
+            print "error while installing dependencies"
+            sys.exit(1)
+        print "dependencies and petmail installed into venv"
+        print "Now use './bin/petmail' to create and launch a node."
+
+
 setup(name=APPNAME,
       description='secure, decentralized, fault-tolerant filesystem',
       long_description=open('README.txt', 'rU').read(),
@@ -430,6 +464,7 @@ setup(name=APPNAME,
                 "make_executable": MakeExecutable,
                 "update_version": UpdateVersion,
                 "sdist": MySdist,
+                'safe_develop': SafeDevelop,
                 },
       package_dir = {'':'src'},
       packages=['allmydata',

@@ -5,7 +5,8 @@
 .*.kate-swp
 
 /build/
-/support/
+/venv/
+/legacysupport/
 
 # these are generated at build time, and never checked in
 /src/allmydata/_version.py
