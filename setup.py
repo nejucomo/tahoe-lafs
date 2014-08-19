@@ -116,34 +116,6 @@ trove_classifiers=[
     ]
 
 
-setup_requires = []
-
-# Nevow imports itself when building, which causes Twisted and zope.interface
-# to be imported. We need to make sure that the versions of Twisted and
-# zope.interface used at build time satisfy Nevow's requirements. If not
-# then there are two problems:
-#  - prior to Nevow v0.9.33, Nevow didn't declare its dependency on Twisted
-#    in a way that enabled setuptools to satisfy that requirement at
-#    build time.
-#  - some versions of zope.interface, e.g. v3.6.4, are incompatible with
-#    Nevow, and we need to avoid those both at build and run-time.
-#
-# This only matters when compatible versions of Twisted and zope.interface
-# are not already installed. Retire this hack when
-# https://bugs.launchpad.net/nevow/+bug/812537 has been fixed.
-setup_requires += [req for req in install_requires if req.startswith('Twisted') or req.startswith('zope.interface')]
-
-# trialcoverage is required if you want the "trial" unit test runner to have a
-# "--reporter=bwverbose-coverage" option which produces code-coverage results.
-# The required version is 0.3.3, because that is the latest version that only
-# depends on a version of pycoverage for which binary packages are available.
-if "--reporter=bwverbose-coverage" in sys.argv:
-    setup_requires.append('trialcoverage >= 0.3.3')
-
-# stdeb is required to produce Debian files with the "sdist_dsc" command.
-if "sdist_dsc" in sys.argv:
-    setup_requires.append('stdeb >= 0.3')
-
 # We no longer have any requirements specific to tests.
 tests_require=[]
 
@@ -456,7 +428,6 @@ setup(name=APPNAME,
                     "allmydata.web.static.css": ["*.css"],
                     "allmydata.web.static.img": ["*.png"],
                     },
-      setup_requires=setup_requires,
       entry_points = { 'console_scripts': [ 'tahoe = allmydata.scripts.runner:run' ] },
       zip_safe=False, # We prefer unzipped for easier access.
       **setup_args
