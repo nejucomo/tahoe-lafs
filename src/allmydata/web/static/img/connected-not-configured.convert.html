@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <meta charset="utf-8">
+  <body>
+    <canvas width="20" height="20"></canvas>
+    <script>
+
+      var canvas = document.querySelector("canvas"),
+      context = canvas.getContext("2d");
+
+      var image = new Image;
+      image.src = "connected-not-configured.svg";
+
+      image.onload = function() {
+      context.drawImage(image, 0, 0);
+
+      var a = document.createElement("a");
+      a.download = "connected-not-configured.png";
+      a.href = canvas.toDataURL("image/png");
+      a.appendChild(document.createTextNode('connected-not-configured'));
+
+      document.body.appendChild(a);
+      console.log('ready');
+      };
+    </script>
+  </body>
+</html>
