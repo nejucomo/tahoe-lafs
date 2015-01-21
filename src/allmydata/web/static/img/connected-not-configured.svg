@@ -17,7 +17,7 @@
     /* ]]> */
   </style>
 
-  <circle cx="10" cy="10" r="8.8" fill="transparent" />
+  <circle cx="10" cy="10" r="8" fill="transparent" />
 
-  <line x1="16.2" y1="3.8" x2="3.8" y2="16.2" />
+  <line x1="15" y1="5" x2="5" y2="15" />
 </svg>
